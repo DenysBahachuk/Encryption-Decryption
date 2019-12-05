@@ -1,0 +1,30 @@
+type: edu
+custom_name: stage4
+files:
+- name: test/EncryptDecryptTest.java
+  visible: false
+  learner_created: false
+- name: src/encryptdecrypt/Main.java
+  visible: true
+  text: "package encryptdecrypt;\nimport java.util.Scanner;\npublic class Main {\n\
+    \npublic static void encryption(String inputMessage, int key)\n    {\n       \
+    \ char[] outputMessage = new char[inputMessage.length()];\n        char ch = '\
+    \ ';\n        for (int i = 0; i < inputMessage.length(); i++)\n        {\n   \
+    \         ch = inputMessage.charAt(i);\n            ch += key;\n            outputMessage[i]\
+    \ = ch;\n            ch = ' ';\n        }\n        System.out.println(outputMessage);\n\
+    \    }\n\n    public static void decryption(String inputMessage, int key)\n  \
+    \  {\n        char[] outputMessage = new char[inputMessage.length()];\n      \
+    \  char ch = ' ';\n        for (int i = 0; i < inputMessage.length(); i++)\n \
+    \       {\n            ch = inputMessage.charAt(i);\n            ch -= key;\n\
+    \            outputMessage[i] = ch;\n            ch = ' ';\n        }\n      \
+    \  System.out.println(outputMessage);\n    }\n\n    public static void main(String[]\
+    \ args) {\n        Scanner scanner = new Scanner(System.in);\n\n        String\
+    \ operation = scanner.nextLine();\n        String inputMessage = scanner.nextLine();\n\
+    \        int key = scanner.nextInt();\n\n        if(operation.equals(\"enc\"))\n\
+    \        {\n            encryption(inputMessage, key);\n        }\n        else\
+    \ if (operation.equals(\"dec\"))\n        {\n            decryption(inputMessage,\
+    \ key);\n        }    \n    }\n}\n"
+  learner_created: false
+feedback_link: https://hyperskill.org/projects/46/stages/248/implement
+status: Solved
+record: 1

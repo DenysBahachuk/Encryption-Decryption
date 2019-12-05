@@ -1,0 +1,87 @@
+type: edu
+custom_name: stage5
+files:
+- name: test/EncryptDecryptTest.java
+  visible: false
+  learner_created: false
+- name: src/encryptdecrypt/Main.java
+  visible: true
+  text: |
+    package encryptdecrypt;
+    public class Main {
+
+        public static void encryption(String inputMessage, int key)
+        {
+            char[] outputMessage = new char[inputMessage.length()];
+            char ch = ' ';
+            for (int i = 0; i < inputMessage.length(); i++)
+            {
+                ch = inputMessage.charAt(i);
+                ch += key;
+                outputMessage[i] = ch;
+                ch = ' ';
+            }
+            System.out.println(outputMessage);
+        }
+
+        public static void decryption(String inputMessage, int key)
+        {
+            char[] outputMessage = new char[inputMessage.length()];
+            char ch = ' ';
+            for (int i = 0; i < inputMessage.length(); i++)
+            {
+                ch = inputMessage.charAt(i);
+                ch -= key;
+                outputMessage[i] = ch;
+                ch = ' ';
+            }
+            System.out.println(outputMessage);
+        }
+
+        public static void main(String[] args)
+        {
+            String operation = "enc";
+            String inputMessage = "";
+            int key = 0;
+
+            for (int i = 0; i < args.length; i++)
+            {
+                if(args[i].equals("-mode"))
+                {
+                    operation = args[i+1];
+                }
+            }
+
+            for (int i = 0; i < args.length; i++)
+            {
+                if(args[i].equals("-key"))
+                {
+                    key = Integer.parseInt(args[i+1]);
+                }
+            }
+
+            for (int i = 0; i < args.length; i++)
+            {
+                if(args[i].equals("-data"))
+                {
+                    inputMessage = args[i+1];
+                }
+            }
+
+            if(operation.equals("enc"))
+            {
+                encryption(inputMessage, key);
+            }
+            else if (operation.equals("dec"))
+            {
+                decryption(inputMessage, key);
+            }
+        }
+    }
+  learner_created: false
+- name: output.txt
+  visible: true
+  learner_created: true
+feedback_link: https://hyperskill.org/projects/46/stages/249/implement
+status: Solved
+record: 3

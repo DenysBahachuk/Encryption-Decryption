@@ -1,0 +1,174 @@
+type: edu
+custom_name: stage2
+files:
+- name: test/EncryptDecryptTest.java
+  visible: false
+  learner_created: false
+- name: src/encryptdecrypt/Main.java
+  visible: true
+  text: |
+    package encryptdecrypt;
+
+    import java.io.File;
+    import java.io.FileNotFoundException;
+    import java.io.FileWriter;
+    import java.io.IOException;
+    import java.util.Scanner;
+
+    public class Main {
+
+        public static String encryption(String inputMessage, int key)
+        {
+            char[] outputMessage = new char[inputMessage.length()];
+            char ch = ' ';
+            for (int i = 0; i < inputMessage.length(); i++)
+            {
+                ch = inputMessage.charAt(i);
+                ch += key;
+                outputMessage[i] = ch;
+                ch = ' ';
+            }
+            String output = new String(outputMessage);
+            return output;
+        }
+
+        public static String decryption(String inputMessage, int key)
+        {
+            char[] outputMessage = new char[inputMessage.length()];
+            char ch = ' ';
+            for (int i = 0; i < inputMessage.length(); i++)
+            {
+                ch = inputMessage.charAt(i);
+                ch -= key;
+                outputMessage[i] = ch;
+                ch = ' ';
+            }
+            String output = new String(outputMessage);
+            return output;
+        }
+
+        public static void main(String[] args)
+        {
+            String operation = "enc";
+            String inputMessage = "";
+            int key = 0;
+            boolean isOut = false;
+            boolean isData = false;
+            boolean isIn = false;
+            boolean isDataAndIn = false;
+
+            for(int i = 0; i < args.length; i++)
+            {
+                if (args[i].equals("-out"))
+                {
+                    isOut = true;
+                }
+                if (args[i].equals("-data"))
+                {
+                    isData = true;
+                }
+                if (args[i].equals("-in"))
+                {
+                    isIn = true;
+                }
+            }
+
+            if (isData && isIn)
+            {
+                isData = true;
+                isIn = false;
+            }
+
+            for (int i = 0; i < args.length; i++)
+            {
+                if(args[i].equals("-mode"))
+                {
+                    operation = args[i+1];
+                }
+            }
+
+            for (int i = 0; i < args.length; i++)
+            {
+                if(args[i].equals("-key"))
+                {
+                    key = Integer.parseInt(args[i+1]);
+                }
+            }
+
+            for (int i = 0; i < args.length; i++)
+            {
+                if(args[i].equals("-data") && isData)
+                {
+                    inputMessage = args[i+1];
+                }
+            }
+
+            //Reading from a file
+            for(int i = 0; i < args.length; i++)
+            {
+                if(args[i].equals("-in") && isIn)
+                {
+                    String pathToRead = args[i+1];
+                    File inputFile = new File(pathToRead);
+                    try(Scanner scanner = new Scanner(inputFile))
+                    {
+                        String str = "";
+                        while(scanner.hasNext())
+                        {
+                            str = scanner.next();
+                            inputMessage = inputMessage + str + " ";
+                        }
+                        inputMessage = inputMessage.substring(0, inputMessage.length() - 1);
+                    }
+                    catch (FileNotFoundException e)
+                    {
+                        System.out.println("No file found: " + pathToRead);
+                    }
+                }
+            }
+
+            //Writing to a file
+            for(int i = 0; i < args.length; i++)
+            {
+                if(args[i].equals("-out") && operation.equals("enc"))
+                {
+                    String pathToWrite = args[i+1];
+                    File inputFile = new File(pathToWrite);
+                    try(FileWriter writer = new FileWriter(pathToWrite))
+                    {
+                        writer.write(encryption(inputMessage, key));
+                    }
+                    catch (IOException e)
+                    {
+                        System.out.printf("An exception occurs %s", e.getMessage());
+                    }
+                }
+                else if(args[i].equals("-out") && operation.equals("dec"))
+                {
+                    String pathToWrite = args[i+1];
+                    File inputFile = new File(pathToWrite);
+                    try(FileWriter writer = new FileWriter(pathToWrite))
+                    {
+                        writer.write(decryption(inputMessage, key));
+                    }
+                    catch (IOException e)
+                    {
+                        System.out.printf("An exception occurs %s", e.getMessage());
+                    }
+                }
+            }
+
+            if(isOut && operation.equals("enc"))
+        {
+            System.out.print(encryption(inputMessage, key));
+        }
+            else if (isOut && operation.equals("dec"))
+        {
+            System.out.print(decryption(inputMessage, key));
+        }
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/projects/46/stages/246/implement
+status: Unchecked
+record: 5
